@@ -1,0 +1,37 @@
+name: pixel_adventure
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.4.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame:
+  flame_tiled: 
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+      - assets/images/
+      - assets/tiles/
+      - assets/images/Background/
+      - assets/images/Items/
+      - assets/images/Main Characters/
+      - assets/images/Main Characters/Mask Dude/
+      - assets/images/Main Characters/Pink Man/
+      - assets/images/Main Characters/Virtual Guy/
+      - assets/images/Main Characters/Ninja Frog/
+      - assets/images/Terrain/
+      - assets/images/Traps/Saw/
+      - assets/images/Items/Checkpoints/Checkpoint/
+      - assets/images/Items/Boxes/Box1/
+      - assets/images/Items/Torch/
+

@@ -1,0 +1,18 @@
+Character and their	abilities
+
+Mask Dude
+Torch Master → When hit the torch, it lit up,
+Horizontal Light Ball → Throws a ball of light horizontally. It illuminates as it travels and stops when hitting a wall.
+Vertical Light Ball → Throws a ball of light straight upward or downward. It lights up vertical shafts or drop zones.
+
+Ninja Frog	
+Double Jump → Can jump twice before touching the ground.	
+Blink → Instantly dash horizontally a fixed distance, bypassing enemies and small gaps (but stops at walls).
+
+Pink Man
+See Traps → Can detect traps slightly outside the normal light radius, making them visible before they are lit.	
+LifeSave → Place a temporary checkpoint at the current location. On death, respawn here instead of the last permanent checkpoint.
+
+Virtual Man	
+3× Light Area → Permanent light radius is three times larger than normal.	
+EmergeLight → Expand light radius to six times the normal size for a short duration, revealing huge sections of the map.
