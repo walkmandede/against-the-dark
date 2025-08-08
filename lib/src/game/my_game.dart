@@ -63,6 +63,7 @@ class PixelAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
+    debugMode = true;
     WidgetsBinding.instance.addObserver(this);
 
     await images.loadAllImages();

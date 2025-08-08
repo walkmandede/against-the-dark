@@ -54,25 +54,6 @@ class PlayerCollisionController {
     final hitBoxHalfWidth = player.playerHitBox.size.x / 2;
     superPrint(collisionType);
     switch (collisionType) {
-      case EnumCollisionType.left:
-        if (player.velocity.x > 0) {
-          player.position.x = other.position.x -
-              (player.playerHitBox.position.x + player.playerHitBox.size.x) +
-              player.size.x / 2;
-          player.velocity.x = 0;
-        }
-        break;
-      case EnumCollisionType.right:
-        if (player.velocity.x < 0) {
-          player.position.x = other.position.x +
-              other.size.x -
-              (hitBoxHalfWidth - spriteHalfWidth);
-
-          player.velocity.x = 0;
-        }
-
-        break;
-
       case EnumCollisionType.top:
         if (player.velocity.y > 0) {
           // Align player's bottom edge with block's top edge
@@ -90,6 +71,25 @@ class PlayerCollisionController {
               other.position.y + other.size.y + spriteHalfHeight;
           player.velocity.y = 0;
         }
+        break;
+      case EnumCollisionType.left:
+        if (player.velocity.x > 0) {
+          player.position.x = other.position.x -
+              (player.playerHitBox.position.x + player.playerHitBox.size.x) +
+              player.size.x /
+                  2.001; // 2.0 is actual size , 2.001 for edge cases
+          player.velocity.x = 0;
+        }
+        break;
+      case EnumCollisionType.right:
+        if (player.velocity.x < 0) {
+          player.position.x = other.position.x +
+              other.size.x -
+              (hitBoxHalfWidth - spriteHalfWidth);
+
+          player.velocity.x = 0;
+        }
+
         break;
     }
   }
