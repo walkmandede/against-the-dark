@@ -18,7 +18,7 @@ enum EnumOverlayRouter { controller, hud, pauseMenu, initialMenu }
 
 enum EnumLevels {
   blackCastle(label: "Black Castle", levelName: "black-castle"),
-  greenJungle(label: "Green Jungle", levelName: "level-1"),
+  greenJungle(label: "Cursed Jungle", levelName: "cursed_jungle"),
   ;
 
   final String label;

@@ -71,9 +71,7 @@ class PlayerOnChangeHandler {
   void _pinkManHandler() {
     final levelWorld = game.levelWorld;
     final player = levelWorld.player;
-    final obstacles = levelWorld.children.where((e) {
-      return e is Obstacle;
-    });
+    final obstacles = levelWorld.children.whereType<Obstacle>();
     game.levelWorld.darkness.lightAreas.addAll([
       ...obstacles.map((e) {
         final obstacle = e as SpriteAnimationComponent;

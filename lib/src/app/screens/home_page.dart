@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pixel_adventure/src/app/hud/game_hud.dart';
+import 'package:pixel_adventure/src/app/hud/pause_menu.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
 import 'package:pixel_adventure/utils/app_enums.dart';
 
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                 ...EnumLevels.values.map((e) {
                   return ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) {
                           return _gameWidget(levelName: e.levelName);
                         },
@@ -55,20 +56,35 @@ class _HomePageState extends State<HomePage> {
   }
 
   _gameWidget({required String levelName}) {
-    return GameWidget.controlled(
-      gameFactory: () {
-        return PixelAdventure(levelName: levelName);
-      },
-      overlayBuilderMap: {
-        EnumOverlayRouter.hud.name: (context, game) {
-          return GameHud(pixelAdventure: game as PixelAdventure);
-        }
-      },
-      loadingBuilder: (p0) {
-        return const Center(
-          child: CupertinoActivityIndicator(),
-        );
-      },
+    return PopScope(
+      canPop: false,
+      child: GameWidget.controlled(
+        gameFactory: () {
+          return PixelAdventure(
+            levelName: levelName,
+            onQuitGame: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) {
+                  return const HomePage();
+                },
+              ));
+            },
+          );
+        },
+        overlayBuilderMap: {
+          EnumOverlayRouter.hud.name: (context, game) {
+            return GameHud(pixelAdventure: game as PixelAdventure);
+          },
+          EnumOverlayRouter.pauseMenu.name: (context, game) {
+            return PauseMenu(pixelAdventure: game as PixelAdventure);
+          },
+        },
+        loadingBuilder: (p0) {
+          return const Center(
+            child: CupertinoActivityIndicator(),
+          );
+        },
+      ),
     );
   }
 }

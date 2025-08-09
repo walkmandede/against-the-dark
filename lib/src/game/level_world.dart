@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:pixel_adventure/src/components/collisions/collision_moving_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_step.dart';
 import 'package:pixel_adventure/src/components/obstacles/spinning_blade.dart';
@@ -63,7 +64,6 @@ class LevelWorld extends World with HasGameRef<PixelAdventure> {
             id: each.name,
             position: Vector2(each.x, each.y),
             size: each.size,
-            customProperties: each.properties,
             xHAxis: xHAxis ?? false,
             axisAmount: axisAmount ?? 1,
           );
@@ -97,6 +97,30 @@ class LevelWorld extends World with HasGameRef<PixelAdventure> {
           );
           add(torch);
           break;
+        case "MovingPlatform":
+          final _hAxis = each.properties.byName["hAxis"];
+          final _axisAmount = each.properties.byName["axisAmount"];
+          bool? xHAxis;
+          double? axisAmount;
+          if (_hAxis != null) {
+            if (_hAxis.type == PropertyType.bool) {
+              xHAxis = _hAxis.value as bool;
+            }
+          }
+
+          if (_axisAmount != null) {
+            if (_axisAmount.type == PropertyType.float) {
+              axisAmount = double.tryParse((_axisAmount.value.toString()));
+            }
+          }
+          final movingPlatform = CollisionMovingPlatform(
+            id: each.name,
+            position: Vector2(each.x, each.y),
+            size: each.size,
+            xHAxis: xHAxis ?? false,
+            axisAmount: axisAmount ?? 1,
+          );
+          add(movingPlatform);
         default:
           break;
       }

@@ -21,7 +21,7 @@ class PlayerAbilitiesHandler extends Component {
     cooldownInSecond: 60,
   );
   AbilityCooldown blinkAbilityCooldown = AbilityCooldown(
-    cooldownInSecond: 10,
+    cooldownInSecond: 5,
   );
 
   AbilityCooldown lightOrbAbilityCooldown = AbilityCooldown(

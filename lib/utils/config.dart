@@ -4,7 +4,7 @@ import 'package:flame/game.dart';
 
 class AppConfig {
   static final Vector2 lighrOrbSize = Vector2.all(32);
-  static const double darknessLevel = 0.99;
+  static const double darknessLevel = 0.5;
   static const double defaultZoomLevel = 1;
   static const double virtualGuyZoomLevel = 0.75;
   static const double defaultPlayerLightRadius = 3;

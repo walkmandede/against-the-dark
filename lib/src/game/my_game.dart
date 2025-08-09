@@ -29,8 +29,10 @@ class PixelAdventure extends FlameGame
   bool xShouldShowJoystick = false;
 
   final String levelName;
+  final Function() onQuitGame;
   PixelAdventure({
     required this.levelName,
+    required this.onQuitGame,
   });
 
   @override
@@ -44,10 +46,22 @@ class PixelAdventure extends FlameGame
 
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive) {
-      pauseEngine(); // Stop updating when in background
-    } else if (state == AppLifecycleState.resumed) {
-      resumeEngine(); // Resume updates
-    }
+      pauseGame();
+    } else if (state == AppLifecycleState.resumed) {}
+  }
+
+  void pauseGame() {
+    overlays.add(EnumOverlayRouter.pauseMenu.name);
+    pauseEngine();
+  }
+
+  void resumeGame() {
+    overlays.remove(EnumOverlayRouter.pauseMenu.name);
+    resumeEngine();
+  }
+
+  void quitGame() {
+    onQuitGame();
   }
 
   @override
@@ -63,10 +77,9 @@ class PixelAdventure extends FlameGame
 
   @override
   FutureOr<void> onLoad() async {
-    debugMode = true;
     WidgetsBinding.instance.addObserver(this);
-
     await images.loadAllImages();
+    debugMode = false;
     levelWorld = LevelWorld(levelName: levelName, player: Player());
     cam = CameraComponent.withFixedResolution(
         world: levelWorld,

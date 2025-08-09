@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/abilities_panel.dart';
+import 'package:pixel_adventure/src/app/hud/widgets/action_panel.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/characters_panel.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
@@ -23,6 +24,12 @@ class GameHud extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: AbilitiesPanel(
+                  pixelAdventure: pixelAdventure,
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: ActionPanel(
                   pixelAdventure: pixelAdventure,
                 ),
               ),

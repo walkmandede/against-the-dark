@@ -25,11 +25,11 @@
                 2,
                 3
             ],
-            "scale": 0.7712,
+            "scale": 0.7699,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 799.4035269709543,
-                "y": 400.02593360995854
+                "x": 309.7804909728536,
+                "y": 414.9889596051436
             }
         },
         "level-1.tmx": {
@@ -64,8 +64,8 @@
             "scale": 0.0987,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3196.555217831814,
-                "y": 1838.9057750759882
+                "x": 2183.38399189463,
+                "y": 1798.3789260385006
             }
         },
         "my_terrain.tsx": {
@@ -76,11 +76,11 @@
     "last.externalTilesetPath": "/Users/kyawphyoehan/Downloads",
     "last.imagePath": "/Users/kyawphyoehan/Desktop/flame_projects/pixel_adventure/assets/images/Terrain",
     "map.fixedSize": true,
-    "map.height": 50,
+    "map.height": 20,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 100,
+    "map.width": 250,
     "openFiles": [
         "level-1.tmx",
         "level-2.tmx",
@@ -90,12 +90,12 @@
     "project": "tile_project.tiled-project",
     "property.type": "float",
     "recentFiles": [
+        "my_terrain.tsx",
+        "level-3.tmx",
         "level-1.tmx",
         "level-2.tmx",
-        "level-3.tmx",
         "black-castle.tmx",
-        "/Users/kyawphyoehan/Downloads/black-castle-expanded.json",
-        "my_terrain.tsx"
+        "/Users/kyawphyoehan/Downloads/black-castle-expanded.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

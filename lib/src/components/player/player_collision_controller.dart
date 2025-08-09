@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:pixel_adventure/src/components/collisions/collision_moving_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_step.dart';
 import 'package:pixel_adventure/src/components/obstacles/spinning_blade.dart';
@@ -20,6 +21,12 @@ class PlayerCollisionController {
       );
     } else if (other is CollisionStep) {
       PlayerCollisionController.onCollideWithStep(
+        player: player,
+        other: other,
+        intersectionPoints: intersectionPoints,
+      );
+    } else if (other is CollisionMovingPlatform) {
+      PlayerCollisionController.onCollideWithMovingPlatform(
         player: player,
         other: other,
         intersectionPoints: intersectionPoints,
@@ -52,7 +59,6 @@ class PlayerCollisionController {
     final spriteHalfHeight = player.size.y / 2;
     final spriteHalfWidth = player.size.x / 2;
     final hitBoxHalfWidth = player.playerHitBox.size.x / 2;
-    superPrint(collisionType);
     switch (collisionType) {
       case EnumCollisionType.top:
         if (player.velocity.y > 0) {
@@ -162,5 +168,36 @@ class PlayerCollisionController {
     required Set<Vector2> intersectionPoints,
   }) {
     player.position = player.game.levelWorld.checkpoint.position.xy;
+  }
+
+  static void onCollideWithMovingPlatform(
+      {required Player player,
+      required CollisionMovingPlatform other,
+      required Set<Vector2> intersectionPoints}) {
+    final collisionType = CollisionHelper.getCollisionTypeFromPoints(
+      target: other,
+      intersectionPoints: intersectionPoints,
+    );
+
+    final spriteHalfHeight = player.size.y / 2;
+    final spriteHalfWidth = player.size.x / 2;
+    final hitBoxHalfWidth = player.playerHitBox.size.x / 2;
+    superPrint(collisionType);
+    switch (collisionType) {
+      case EnumCollisionType.left:
+      case EnumCollisionType.right:
+      case EnumCollisionType.top:
+        if (player.velocity.y > 0) {
+          // Align player's bottom edge with block's top edge
+          player.position.y = other.position.y - (spriteHalfHeight * 1.505);
+          player.velocity.y = 0;
+          player.isOnGround = true;
+          player.playerAbilitiesHandler.onPlayerLanded();
+        }
+        break;
+
+      case EnumCollisionType.bot:
+        break;
+    }
   }
 }

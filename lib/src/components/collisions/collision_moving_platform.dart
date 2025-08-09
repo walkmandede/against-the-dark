@@ -9,12 +9,12 @@ import 'package:pixel_adventure/src/game/my_game.dart';
 import 'package:pixel_adventure/utils/app_enums.dart';
 import 'package:pixel_adventure/utils/collision_helper.dart';
 
-class SpinningBlade extends SpriteAnimationComponent
+class CollisionMovingPlatform extends SpriteAnimationComponent
     with HasGameRef<PixelAdventure>, Obstacle {
   final String id;
   final bool xHAxis;
   final double axisAmount;
-  SpinningBlade({
+  CollisionMovingPlatform({
     required this.id,
     required Vector2 position,
     required Vector2 size,
@@ -33,11 +33,13 @@ class SpinningBlade extends SpriteAnimationComponent
   late Vector2 originalPosition;
 
   bool xDown = true;
+  bool xRight = true;
 
   @override
   FutureOr<void> onLoad() {
+    debugMode = true;
     //adjusting for anchor
-    position = position.xy + Vector2.all(size.x / 2);
+    position = position.xy + Vector2(size.x / 2, 0);
     originalPosition = position.xy;
     //
     debugMode = false;
@@ -51,6 +53,17 @@ class SpinningBlade extends SpriteAnimationComponent
     if (xHAxis != null) {
       if (xHAxis!) {
         //hAxis
+        if (position.x > originalPosition.x + (size.x * axisAmount)) {
+          xRight = false;
+        } else if (position.x < originalPosition.x - (size.x * axisAmount)) {
+          xRight = true;
+        }
+
+        if (xRight) {
+          position.x += size.x * dt;
+        } else {
+          position.x -= size.x * dt;
+        }
       } else {
         //VAxis
 
@@ -71,13 +84,13 @@ class SpinningBlade extends SpriteAnimationComponent
   }
 
   void _setAnimation() {
-    const path = "Traps/Saw/On (38x38).png";
+    const path = "Traps/Falling Platforms/On (32x10).png";
     runAnimation = SpriteAnimation.fromFrameData(
       game.images.fromCache(path),
       SpriteAnimationData.sequenced(
-        amount: 8,
+        amount: 4,
         stepTime: 0.05,
-        textureSize: Vector2.all(38),
+        textureSize: Vector2(32, 10),
       ),
     );
     animation = runAnimation;

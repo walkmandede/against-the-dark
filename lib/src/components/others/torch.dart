@@ -20,7 +20,6 @@ class Torch extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    debugMode = true;
     position = position.xy;
     _setAnimation();
     return super.onLoad();

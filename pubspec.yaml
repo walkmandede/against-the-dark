@@ -31,6 +31,7 @@ flutter:
       - assets/images/Main Characters/Ninja Frog/
       - assets/images/Terrain/
       - assets/images/Traps/Saw/
+      - assets/images/Traps/Falling Platforms/
       - assets/images/Items/Checkpoints/Checkpoint/
       - assets/images/Items/Boxes/Box1/
       - assets/images/Items/Torch/
