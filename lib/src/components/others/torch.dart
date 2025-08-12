@@ -10,6 +10,7 @@ class Torch extends SpriteAnimationComponent
   bool xLittedUp;
   Torch({
     required super.position,
+    required super.size,
     this.xLittedUp = false,
   }) : super(
           anchor: Anchor.center,
@@ -20,7 +21,7 @@ class Torch extends SpriteAnimationComponent
 
   @override
   FutureOr<void> onLoad() {
-    position = position.xy;
+    position = position.xy + Vector2(size.x / 2, size.y / 2);
     _setAnimation();
     return super.onLoad();
   }
@@ -53,7 +54,7 @@ class Torch extends SpriteAnimationComponent
 
       //
       game.levelWorld.darkness.lightAreas.add(
-        LightArea("", EnumLightAreaType.torch, center, size.y * 3),
+        LightArea("", EnumLightAreaType.torch, center, size.y * 5),
       );
     }
   }

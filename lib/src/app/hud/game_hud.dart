@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/abilities_panel.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/action_panel.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/characters_panel.dart';
+import 'package:pixel_adventure/src/app/hud/widgets/game_stats_panel.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
@@ -12,17 +13,18 @@ class GameHud extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // return const SizedBox.shrink();
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: SizedBox.expand(
           child: Stack(
             children: [
               Align(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.topLeft,
                 child: CharactersPanel(pixelAdventure: pixelAdventure),
               ),
               Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomLeft,
                 child: AbilitiesPanel(
                   pixelAdventure: pixelAdventure,
                 ),
@@ -30,6 +32,12 @@ class GameHud extends StatelessWidget {
               Align(
                 alignment: Alignment.topRight,
                 child: ActionPanel(
+                  pixelAdventure: pixelAdventure,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: GameStatsPanel(
                   pixelAdventure: pixelAdventure,
                 ),
               ),

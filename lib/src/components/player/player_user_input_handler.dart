@@ -56,7 +56,7 @@ class PlayerUserInputHandler {
       case EnumPlayerCharacter.maskDude:
         player.playerAbilitiesHandler.emitHLightOrb();
       case EnumPlayerCharacter.ninjaFrog:
-        player.playerAbilitiesHandler.blink();
+        player.playerAbilitiesHandler.dash();
 
       case EnumPlayerCharacter.pinkMan:
         player.playerAbilitiesHandler.setCheckPoint();

@@ -20,6 +20,19 @@ class LightOrb extends SpriteAnimationComponent
     return super.onLoad();
   }
 
+  @override
+  void update(double dt) {
+//check if the player is out of the bound
+    if (position.x < 0 ||
+        position.x > game.levelWorld.level.size.x ||
+        position.y < 0 ||
+        position.y > game.levelWorld.level.size.y) {
+      print([game.size, position]);
+      finishAbitily(lightOrbInstance: this);
+    }
+    super.update(dt);
+  }
+
   void _setAnimation() {
     const path = "Main Characters/Appearing (96x96).png";
     animation = SpriteAnimation.fromFrameData(
@@ -32,7 +45,8 @@ class LightOrb extends SpriteAnimationComponent
     );
   }
 
-  void finishAbitily() {
+  void finishAbitily({required LightOrb? lightOrbInstance}) {
+    lightOrbInstance = null;
     game.cam.follow(
       game.levelWorld.player,
     );

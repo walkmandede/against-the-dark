@@ -3,11 +3,18 @@ import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pixel_adventure/src/components/collisions/base_block.dart';
+import 'package:pixel_adventure/src/components/collisions/base_platform.dart';
+import 'package:pixel_adventure/src/components/collisions/base_step.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_moving_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_step.dart';
+import 'package:pixel_adventure/src/components/collisions/base_ground.dart';
 import 'package:pixel_adventure/src/components/obstacles/spinning_blade.dart';
 import 'package:pixel_adventure/src/components/others/checkpoint.dart';
+import 'package:pixel_adventure/src/components/others/goal_point.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/components/player/player.dart';
 import 'package:pixel_adventure/src/game/darkness.dart';
@@ -26,57 +33,47 @@ class LevelWorld extends World with HasGameRef<PixelAdventure> {
   late Darkness darkness;
   late Checkpoint checkpoint;
 
+  ValueNotifier<int> failCount = ValueNotifier(0);
+  ValueNotifier<double> totalTime = ValueNotifier(0);
+
+  @override
+  void update(double dt) {
+    // TODO: implement update
+    totalTime.value += dt;
+    super.update(dt);
+  }
+
   @override
   FutureOr<void> onLoad() async {
     game.overlays.add(EnumOverlayRouter.hud.name);
     checkpoint = Checkpoint(position: Vector2(0, 0));
     level = await TiledComponent.load("$levelName.tmx", Vector2.all(16));
+
     add(level);
     add(player);
     add(checkpoint);
     game.cam.follow(player);
 
-    //adding spwanpoints
-    final spawnpointsLayer = level.tileMap.getLayer<ObjectGroup>("Spawnpoints");
-    for (final TiledObject each in (spawnpointsLayer?.objects ?? [])) {
+    //adding base - bg layer
+    final baseLayer = level.tileMap.getLayer<ObjectGroup>("ObjectLayer");
+    for (final TiledObject each in (baseLayer?.objects ?? [])) {
       switch (each.class_) {
-        case "Player":
-          player.position = Vector2(each.x, each.y);
-          player.setCheckPoint(point: player.position.xy);
-          break;
-        case "SpinningBlade":
-          final _hAxis = each.properties.byName["hAxis"];
-          final _axisAmount = each.properties.byName["axisAmount"];
-          bool? xHAxis;
-          double? axisAmount;
-          if (_hAxis != null) {
-            if (_hAxis.type == PropertyType.bool) {
-              xHAxis = _hAxis.value as bool;
-            }
-          }
-
-          if (_axisAmount != null) {
-            if (_axisAmount.type == PropertyType.float) {
-              axisAmount = double.tryParse((_axisAmount.value.toString()));
-            }
-          }
-          final spinningBlade = SpinningBlade(
-            id: each.name,
-            position: Vector2(each.x, each.y),
+        case "Ground":
+          final ground = BaseGround(
+            id: "",
+            position: each.position,
             size: each.size,
-            xHAxis: xHAxis ?? false,
-            axisAmount: axisAmount ?? 1,
           );
-          add(spinningBlade);
-      }
-    }
-
-    //add collisions
-    final collisionsLayer = level.tileMap.getLayer<ObjectGroup>("Collisions");
-    for (final TiledObject each in (collisionsLayer?.objects ?? [])) {
-      switch (each.class_) {
+          add(ground);
+        case "Block":
+          final block = BaseBlock(
+            id: "",
+            position: each.position,
+            size: each.size,
+          );
+          add(block);
         case "Platform":
-          final platform = CollisionPlatform(
+          final platform = BasePlatform(
             id: each.name,
             position: Vector2(each.x, each.y),
             size: each.size,
@@ -84,16 +81,27 @@ class LevelWorld extends World with HasGameRef<PixelAdventure> {
           add(platform);
           break;
         case "Step":
-          final step = CollisionStep(
+          final step = BaseStep(
             id: each.name,
             position: Vector2(each.x, each.y),
             size: each.size,
           );
           add(step);
           break;
+
+        case "Wall":
+          final platform = CollisionPlatform(
+            id: each.name,
+            position: Vector2(each.x, each.y),
+            size: each.size,
+          );
+          add(platform);
+          break;
+
         case "Torch":
           final torch = Torch(
             position: Vector2(each.x, each.y),
+            size: each.size,
           );
           add(torch);
           break;
@@ -121,8 +129,48 @@ class LevelWorld extends World with HasGameRef<PixelAdventure> {
             axisAmount: axisAmount ?? 1,
           );
           add(movingPlatform);
-        default:
+
+        case "Player":
+          player.position = Vector2(each.x, each.y);
+          player.setCheckPoint(point: player.position.xy);
           break;
+        case "Goal":
+          final goalPoint = GoalPoint(position: each.position, size: each.size);
+          add(goalPoint);
+          break;
+        case "SpinningBlade":
+          final _hAxis = each.properties.byName["hAxis"];
+          final _axisAmount = each.properties.byName["axisAmount"];
+          final _speedFactor = each.properties.byName["speedFactor"];
+          bool? xHAxis;
+          double? axisAmount;
+          double? speedFactor;
+          if (_hAxis != null) {
+            if (_hAxis.type == PropertyType.bool) {
+              xHAxis = _hAxis.value as bool;
+            }
+          }
+
+          if (_axisAmount != null) {
+            if (_axisAmount.type == PropertyType.float) {
+              axisAmount = double.tryParse((_axisAmount.value.toString()));
+            }
+          }
+
+          if (_speedFactor != null) {
+            if (_speedFactor.type == PropertyType.float) {
+              speedFactor = double.tryParse((_speedFactor.value.toString()));
+            }
+          }
+          final spinningBlade = SpinningBlade(
+            id: each.name,
+            position: Vector2(each.x, each.y),
+            size: each.size,
+            xHAxis: xHAxis ?? false,
+            axisAmount: axisAmount ?? 1,
+            speedFactor: speedFactor ?? 1,
+          );
+          add(spinningBlade);
       }
     }
 
@@ -152,5 +200,10 @@ class LevelWorld extends World with HasGameRef<PixelAdventure> {
         player.size.x * 2,
       ),
     );
+  }
+
+  void victory() {
+    game.overlays.add(EnumOverlayRouter.victory.name);
+    game.pauseEngine();
   }
 }

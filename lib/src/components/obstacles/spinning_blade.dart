@@ -14,12 +14,14 @@ class SpinningBlade extends SpriteAnimationComponent
   final String id;
   final bool xHAxis;
   final double axisAmount;
+  final double speedFactor;
   SpinningBlade({
     required this.id,
     required Vector2 position,
     required Vector2 size,
     this.xHAxis = true,
     this.axisAmount = 1,
+    this.speedFactor = 1,
   }) : super(
           position: position,
           size: size,
@@ -33,6 +35,7 @@ class SpinningBlade extends SpriteAnimationComponent
   late Vector2 originalPosition;
 
   bool xDown = true;
+  bool xRight = true;
 
   @override
   FutureOr<void> onLoad() {
@@ -48,23 +51,32 @@ class SpinningBlade extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    if (xHAxis != null) {
-      if (xHAxis!) {
-        //hAxis
+    if (xHAxis) {
+      //hAxis
+      if (position.x > originalPosition.x + (size.x * axisAmount)) {
+        xRight = false;
+      } else if (position.x < originalPosition.x - (size.x * axisAmount)) {
+        xRight = true;
+      }
+
+      if (xRight) {
+        position.x += size.x * speedFactor * dt;
       } else {
-        //VAxis
+        position.x -= size.x * speedFactor * dt;
+      }
+    } else {
+      //VAxis
 
-        if (position.y > originalPosition.y + (size.y * axisAmount)) {
-          xDown = false;
-        } else if (position.y < originalPosition.y - (size.y * axisAmount)) {
-          xDown = true;
-        }
+      if (position.y > originalPosition.y + (size.y * axisAmount)) {
+        xDown = false;
+      } else if (position.y < originalPosition.y - (size.y * axisAmount)) {
+        xDown = true;
+      }
 
-        if (xDown) {
-          position.y += size.y * dt;
-        } else {
-          position.y -= size.y * dt;
-        }
+      if (xDown) {
+        position.y += size.y * speedFactor * dt;
+      } else {
+        position.y -= size.y * speedFactor * dt;
       }
     }
     super.update(dt);

@@ -15,6 +15,7 @@ import 'package:pixel_adventure/src/components/player/player_user_input_handler.
 import 'package:pixel_adventure/src/game/my_game.dart';
 import 'package:pixel_adventure/utils/app_enums.dart';
 import 'package:pixel_adventure/utils/collision_helper.dart';
+import 'package:pixel_adventure/utils/config.dart';
 
 class PlayerHitBox {
   final Vector2 position;
@@ -40,9 +41,9 @@ class Player extends SpriteAnimationGroupComponent
 
   EnumPlayerState currentPlayerState = EnumPlayerState.idle;
 
-  double moveSpeedX = 100;
-  double gravity = 800; // pixels per second squared
-  double jumpForce = -300; // negative because up
+  double moveSpeedX = AppConfig.playerMoveSpeedX;
+  double gravity = AppConfig.gravity; // pixels per second squared
+  double jumpForce = AppConfig.playerJumpForce; // negative because up
   bool isOnGround = false;
 
   Vector2 velocity = Vector2.zero();
@@ -84,9 +85,13 @@ class Player extends SpriteAnimationGroupComponent
   @override
   void update(double dt) {
     super.update(dt);
-
     updatePlayerMovement(dt);
     updatePlayerState();
+  }
+
+  void killPlayer() {
+    game.levelWorld.failCount.value += 1;
+    position = game.levelWorld.checkpoint.position.xy;
   }
 
   void updatePlayerMovement(double dt) {
@@ -128,6 +133,15 @@ class Player extends SpriteAnimationGroupComponent
   }
 
   void updatePlayerState() {
+    //check if the player is out of the bound
+    if (position.x < 0 ||
+        position.x > game.levelWorld.level.size.x ||
+        position.y < 0 ||
+        position.y > game.levelWorld.level.size.y) {
+      print([game.size, position]);
+      killPlayer();
+    }
+
     // Flip sprite
     if (velocity.x < 0 && scale.x > 0) {
       flipHorizontallyAroundCenter();

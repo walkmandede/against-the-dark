@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/src/components/others/light_orb.dart';
 
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/game/darkness.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
+import 'package:pixel_adventure/utils/app_enums.dart';
 import 'package:pixel_adventure/utils/config.dart';
 
 import 'ability_cooldown_model.dart';
@@ -20,8 +23,8 @@ class PlayerAbilitiesHandler extends Component {
   AbilityCooldown checkPointAbilityCooldown = AbilityCooldown(
     cooldownInSecond: 60,
   );
-  AbilityCooldown blinkAbilityCooldown = AbilityCooldown(
-    cooldownInSecond: 5,
+  AbilityCooldown dashAbilityCooldown = AbilityCooldown(
+    cooldownInSecond: 10,
   );
 
   AbilityCooldown lightOrbAbilityCooldown = AbilityCooldown(
@@ -31,12 +34,27 @@ class PlayerAbilitiesHandler extends Component {
   LightOrb? hLightOrb;
   LightOrb? vLightOrb;
 
+  late Map<EnumAbilities, AbilityCooldown> abilitiesCooldownMap;
+
+  @override
+  FutureOr<void> onLoad() {
+    //set Mapper
+    abilitiesCooldownMap = {
+      EnumAbilities.defyGravity: dashAbilityCooldown,
+      EnumAbilities.setCheckPoint: checkPointAbilityCooldown,
+      EnumAbilities.upLightOrb: lightOrbAbilityCooldown,
+      EnumAbilities.downLightOrb: lightOrbAbilityCooldown,
+      EnumAbilities.forwardLightOrb: lightOrbAbilityCooldown,
+    };
+    return super.onLoad();
+  }
+
   @override
   void update(double dt) {
     //add cooldowns
     checkPointAbilityCooldown.update(dt: dt);
     playerSwitchCooldown.update(dt: dt);
-    blinkAbilityCooldown.update(dt: dt);
+    dashAbilityCooldown.update(dt: dt);
     lightOrbAbilityCooldown.update(dt: dt);
 
     //light orb animation
@@ -95,19 +113,29 @@ class PlayerAbilitiesHandler extends Component {
   //end of checkpoint
 
   //start of blink
-  void blink() {
+  void dash() {
     final player = game.levelWorld.player;
 
+    // if (player.isOnGround) {
+    //   return;
+    // }
+
     if (player.currentCharacter.value == EnumPlayerCharacter.ninjaFrog) {
-      final xStarted = blinkAbilityCooldown.startCooldown();
+      final xStarted = dashAbilityCooldown.startCooldown();
       if (!xStarted) {
         return;
       }
 
-      player.movementX = player.isFlippedHorizontally ? -8 : 8;
-      Future.delayed(const Duration(milliseconds: 500)).then(
+      // player.movementX = player.isFlippedHorizontally ? -2.5 : 2.5;
+      player.gravity = AppConfig.gravity * 0.05;
+      player.jumpForce = AppConfig.playerJumpForce * 0.5;
+
+      Future.delayed(const Duration(milliseconds: 3000)).then(
         (value) {
-          player.movementX = 0;
+          player.gravity = AppConfig.gravity;
+          player.jumpForce = AppConfig.playerJumpForce;
+
+          // player.movementX = 0;
         },
       );
     }
@@ -140,6 +168,8 @@ class PlayerAbilitiesHandler extends Component {
         ),
         velocity: moveSpeed,
       );
+      game.cam.follow(hLightOrb!);
+
       player.game.levelWorld.add(hLightOrb!);
       await Future.delayed(const Duration(milliseconds: 3000));
       _clearLightOrb();
@@ -168,6 +198,8 @@ class PlayerAbilitiesHandler extends Component {
         ),
         velocity: moveSpeed,
       );
+      game.cam.follow(vLightOrb!);
+
       player.game.levelWorld.add(vLightOrb!);
       await Future.delayed(const Duration(milliseconds: 3000));
       _clearLightOrb();
@@ -178,12 +210,10 @@ class PlayerAbilitiesHandler extends Component {
     final player = game.levelWorld.player;
 
     if (hLightOrb != null) {
-      hLightOrb!.finishAbitily();
-      hLightOrb = null;
+      hLightOrb!.finishAbitily(lightOrbInstance: hLightOrb);
     }
     if (vLightOrb != null) {
-      vLightOrb!.finishAbitily();
-      vLightOrb = null;
+      vLightOrb!.finishAbitily(lightOrbInstance: vLightOrb);
     }
   }
 
@@ -191,10 +221,8 @@ class PlayerAbilitiesHandler extends Component {
     if (hLightOrb == null) {
       return;
     }
-    final player = game.levelWorld.player;
 
     hLightOrb!.position += hLightOrb!.velocity * dt;
-    game.cam.follow(hLightOrb!);
     final world = game.levelWorld;
     world.darkness.lightAreas.add(
       LightArea(
@@ -210,10 +238,8 @@ class PlayerAbilitiesHandler extends Component {
     if (vLightOrb == null) {
       return;
     }
-    final player = game.levelWorld.player;
 
     vLightOrb!.position += vLightOrb!.velocity * dt;
-    game.cam.follow(vLightOrb!);
     final world = game.levelWorld;
     world.darkness.lightAreas.add(
       LightArea(

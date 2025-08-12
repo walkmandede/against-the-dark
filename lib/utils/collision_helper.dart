@@ -6,6 +6,7 @@ class CollisionHelper {
     required PositionComponent target,
     required Set<Vector2> intersectionPoints,
     double tolerance = 2.0,
+    Vector2? playerVelocity,
   }) {
     int topHits = 0;
     int bottomHits = 0;
@@ -22,6 +23,11 @@ class CollisionHelper {
       if ((point.y - bottom).abs() < tolerance) bottomHits++;
       if ((point.x - left).abs() < tolerance) leftHits++;
       if ((point.x - right).abs() < tolerance) rightHits++;
+    }
+
+    // If player is falling and there's a top collision, prioritize it
+    if (playerVelocity != null && playerVelocity.y > 0 && topHits > 0) {
+      return EnumCollisionType.top;
     }
 
     final sideHits = {

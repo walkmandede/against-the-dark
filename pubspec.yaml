@@ -21,6 +21,7 @@ flutter:
   uses-material-design: true
   assets:
       - assets/images/
+      - assets/images/thumbnails/
       - assets/tiles/
       - assets/images/Background/
       - assets/images/Items/
@@ -33,6 +34,8 @@ flutter:
       - assets/images/Traps/Saw/
       - assets/images/Traps/Falling Platforms/
       - assets/images/Items/Checkpoints/Checkpoint/
+      - assets/images/Items/Checkpoints/End/
       - assets/images/Items/Boxes/Box1/
       - assets/images/Items/Torch/
+      - assets/images/Terrain/
 

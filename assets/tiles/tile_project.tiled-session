@@ -3,13 +3,13 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level-1.tmx",
+    "activeFile": "cursed_jungle.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
-        "C:/Users/kyawphyoehan/Downloads/black-castle-expanded.json": {
+        "/Users/kyawphyoehan/Downloads/black-castle-expanded.json": {
             "scale": 0.8918124999999999,
             "selectedLayer": 0,
             "viewCenter": {
@@ -17,45 +17,48 @@
                 "y": 159.7869507323569
             }
         },
-        "C:/Users/kyawphyoehan/Downloads/castle-tileset.tsx": {
+        "/Users/kyawphyoehan/Downloads/castle-tileset.tsx": {
             "scaleInDock": 1
         },
         "black-castle.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
-            "scale": 0.7712,
-            "selectedLayer": 1,
+            "scale": 1.4896,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 147.17323651452273,
-                "y": 475.23340248962666
+                "x": -0.6713211600429645,
+                "y": 632.720193340494
             }
         },
         "cursed_jungle.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 0,
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 1.5001,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 279,
-                "y": 98.99999999999997
+                "x": 163.322445170322,
+                "y": 39.6640223985068
             }
         },
         "level-1.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1.0515,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 201.14122681883023,
-                "y": 238.23109843081312
+                "x": 320.0190204469805,
+                "y": 178.31669044222542
             }
         },
         "level-2.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 1.1021,
             "selectedLayer": 1,
@@ -66,14 +69,14 @@
         },
         "level-3.tmx": {
             "expandedObjectLayers": [
-                3,
-                2
+                2,
+                3
             ],
             "scale": 0.0987,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 3196.555217831814,
-                "y": 1838.905775075988
+                "x": 2183.38399189463,
+                "y": 1798.3789260385006
             }
         },
         "my_terrain.tsx": {
@@ -90,17 +93,19 @@
     "map.tileWidth": 16,
     "map.width": 250,
     "openFiles": [
-        "level-1.tmx"
+        "cursed_jungle.tmx",
+        "black-castle.tmx"
     ],
     "project": "tile_project.tiled-project",
-    "property.type": "float",
+    "property.type": "bool",
     "recentFiles": [
+        "black-castle.tmx",
+        "cursed_jungle.tmx",
+        "my_terrain.tsx",
+        "level-3.tmx",
         "level-1.tmx",
         "level-2.tmx",
-        "black-castle.tmx",
-        "level-3.tmx",
-        "C:/Users/kyawphyoehan/Downloads/black-castle-expanded.json",
-        "my_terrain.tsx"
+        "/Users/kyawphyoehan/Downloads/black-castle-expanded.json"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {

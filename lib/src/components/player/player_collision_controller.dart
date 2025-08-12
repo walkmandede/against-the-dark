@@ -1,8 +1,13 @@
 import 'package:flame/components.dart';
+import 'package:pixel_adventure/src/components/collisions/base_block.dart';
+import 'package:pixel_adventure/src/components/collisions/base_platform.dart';
+import 'package:pixel_adventure/src/components/collisions/base_step.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_moving_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_platform.dart';
 import 'package:pixel_adventure/src/components/collisions/collision_step.dart';
+import 'package:pixel_adventure/src/components/collisions/base_ground.dart';
 import 'package:pixel_adventure/src/components/obstacles/spinning_blade.dart';
+import 'package:pixel_adventure/src/components/others/goal_point.dart';
 import 'package:pixel_adventure/src/components/others/torch.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/components/player/player.dart';
@@ -11,15 +16,22 @@ import 'package:pixel_adventure/utils/collision_helper.dart';
 import 'package:pixel_adventure/utils/logger.dart';
 
 class PlayerCollisionController {
+  static final List<Type> platformObjects = [
+    CollisionPlatform,
+    BaseGround,
+    BasePlatform,
+    BaseBlock,
+  ];
+
   static void onCollision(
       Set<Vector2> intersectionPoints, PositionComponent other, Player player) {
-    if (other is CollisionPlatform) {
+    if (platformObjects.contains(other.runtimeType)) {
       PlayerCollisionController.onCollideWithPlatform(
         player: player,
         other: other,
         intersectionPoints: intersectionPoints,
       );
-    } else if (other is CollisionStep) {
+    } else if (other is CollisionStep || other is BaseStep) {
       PlayerCollisionController.onCollideWithStep(
         player: player,
         other: other,
@@ -39,6 +51,12 @@ class PlayerCollisionController {
       );
     } else if (other is Torch) {
       PlayerCollisionController.onCollideWithTorch(
+        player: player,
+        other: other,
+        intersectionPoints: intersectionPoints,
+      );
+    } else if (other is GoalPoint) {
+      PlayerCollisionController.onCollideWithGoalPoint(
         player: player,
         other: other,
         intersectionPoints: intersectionPoints,
@@ -167,7 +185,7 @@ class PlayerCollisionController {
     required PositionComponent other,
     required Set<Vector2> intersectionPoints,
   }) {
-    player.position = player.game.levelWorld.checkpoint.position.xy;
+    player.killPlayer();
   }
 
   static void onCollideWithMovingPlatform(
@@ -177,6 +195,7 @@ class PlayerCollisionController {
     final collisionType = CollisionHelper.getCollisionTypeFromPoints(
       target: other,
       intersectionPoints: intersectionPoints,
+      playerVelocity: player.velocity,
     );
 
     final spriteHalfHeight = player.size.y / 2;
@@ -199,5 +218,12 @@ class PlayerCollisionController {
       case EnumCollisionType.bot:
         break;
     }
+  }
+
+  static void onCollideWithGoalPoint(
+      {required Player player,
+      required GoalPoint other,
+      required Set<Vector2> intersectionPoints}) {
+    player.game.levelWorld.victory();
   }
 }

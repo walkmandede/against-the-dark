@@ -28,24 +28,24 @@ class PauseMenu extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text("The game is paused"),
-                        SizedBox(
+                        const Text("The game is paused"),
+                        const SizedBox(
                           height: 10,
                         ),
                         ElevatedButton(
                           onPressed: () {
                             pixelAdventure.resumeGame();
                           },
-                          child: Text("Resume"),
+                          child: const Text("Resume"),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         ElevatedButton(
                           onPressed: () {
                             pixelAdventure.quitGame();
                           },
-                          child: Text("Quit"),
+                          child: const Text("Quit"),
                         ),
                       ],
                     ),

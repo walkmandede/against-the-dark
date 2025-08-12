@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
@@ -12,356 +14,227 @@ class AbilitiesPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white.withOpacity(0.5),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(
-          color: Colors.yellow,
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: dataController.deviceSize.x * 0.025,
-          vertical: dataController.deviceSize.y * 0.015,
-        ),
-        child: ValueListenableBuilder(
-          valueListenable: pixelAdventure.levelWorld.player.currentCharacter,
-          builder: (context, currentCharcter, child) {
-            switch (currentCharcter) {
-              case EnumPlayerCharacter.maskDude:
-                return _maskDudeAbilities();
-              case EnumPlayerCharacter.ninjaFrog:
-                return _ninjaFrogAbilities();
-              case EnumPlayerCharacter.pinkMan:
-                return _pinkManAbilities();
-              case EnumPlayerCharacter.virtualGuy:
-                return _virtualGuyAbilities();
-              default:
-                return const SizedBox.shrink();
-            }
-          },
-        ),
-      ),
+    return SizedBox.expand(
+      child: LayoutBuilder(builder: (a1, c1) {
+        final maxSide = max(c1.maxWidth, c1.maxHeight);
+        final minSide = min(c1.maxWidth, c1.maxHeight);
+        return Padding(
+          padding: EdgeInsets.all(minSide * 0.025),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ValueListenableBuilder(
+                valueListenable:
+                    pixelAdventure.levelWorld.player.currentCharacter,
+                builder: (context, currentCharacter, child) {
+                  return _eachPlayerAbilityWidget(
+                      currentCharacter: currentCharacter, minSide: minSide);
+                },
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 
-  Widget _ninjaFrogAbilities() {
-    final abilityHandler =
-        pixelAdventure.levelWorld.player.playerAbilitiesHandler;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text("Ninja Frog, the Ninja"),
-        const Text(
-          """
-+ can double jump
-""",
-          style: TextStyle(
-            fontSize: 10,
-          ),
-        ),
-        ValueListenableBuilder(
-          valueListenable:
-              abilityHandler.blinkAbilityCooldown.remainingCooldown,
-          builder: (context, remainingCooldown, child) {
-            return GestureDetector(
-              onTap: () {
-                abilityHandler.blink();
-              },
-              child: Column(
+  Widget _eachPlayerAbilityWidget(
+      {required EnumPlayerCharacter currentCharacter,
+      required double minSide}) {
+    return Card(
+      color: Colors.white.withOpacity(0.3),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: const BorderSide(color: Colors.white)),
+      child: Padding(
+        padding: EdgeInsets.all(minSide * 0.01),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: minSide * 0.025,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Card(
-                    shape: const CircleBorder(),
-                    child: SizedBox(
-                      width: dataController.deviceSize.x * 0.075,
-                      height: dataController.deviceSize.x * 0.075,
-                      child: Stack(
-                        children: [
-                          const Center(child: Icon(Icons.abc_outlined)),
-                          if (remainingCooldown > 0)
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(1000),
-                              child: SizedBox.expand(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(0.8)),
-                                ),
-                              ),
-                            ),
-                          Center(
-                            child: CircularProgressIndicator(
-                              value: remainingCooldown /
-                                  abilityHandler
-                                      .blinkAbilityCooldown.cooldownInSecond,
-                              color: Colors.yellow,
-                            ),
-                          )
-                        ],
+                  FittedBox(
+                    child: Text(
+                      currentCharacter.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.yellow,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const Text("J")
                 ],
               ),
-            );
-          },
-        )
-      ],
-    );
-  }
-
-  Widget _maskDudeAbilities() {
-    final abilityHandler =
-        pixelAdventure.levelWorld.player.playerAbilitiesHandler;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text("Mask Dude, the Scout"),
-        const Text(
-          """
-+ can lit the torch by hitting
-""",
-          style: TextStyle(
-            fontSize: 10,
-          ),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ValueListenableBuilder(
-              valueListenable:
-                  abilityHandler.lightOrbAbilityCooldown.remainingCooldown,
-              builder: (context, remainingCooldown, child) {
-                return GestureDetector(
-                  onTap: () {
-                    abilityHandler.emitHLightOrb();
-                  },
-                  child: Column(
-                    children: [
-                      Card(
-                        shape: const CircleBorder(),
-                        child: SizedBox(
-                          width: dataController.deviceSize.x * 0.075,
-                          height: dataController.deviceSize.x * 0.075,
+            ),
+            SizedBox(
+              height: minSide * 0.025,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      "Passive : ${currentCharacter.passive.name}",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: minSide * 0.025,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  FittedBox(
+                    child: Text(
+                      currentCharacter.passive.desc,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.lightBlue,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: minSide * 0.0125,
+            ),
+            ...currentCharacter.abilities.map(
+              (ability) {
+                return SizedBox(
+                  height: minSide * 0.05,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: minSide * 0.015),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        AspectRatio(
+                          aspectRatio: 1,
                           child: Stack(
+                            alignment: Alignment.center,
                             children: [
-                              const Center(child: Icon(Icons.abc_outlined)),
-                              if (remainingCooldown > 0)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(1000),
-                                  child: SizedBox.expand(
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.8),
-                                      ),
-                                    ),
+                              CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: Center(
+                                  child: FittedBox(
+                                    child: Text(ability.shortKey),
                                   ),
                                 ),
-                              Center(
-                                child: CircularProgressIndicator(
-                                  value: remainingCooldown /
-                                      abilityHandler.lightOrbAbilityCooldown
-                                          .cooldownInSecond,
-                                  color: Colors.yellow,
+                              ),
+                              if (pixelAdventure
+                                      .levelWorld
+                                      .player
+                                      .playerAbilitiesHandler
+                                      .abilitiesCooldownMap[ability] !=
+                                  null)
+                                ValueListenableBuilder(
+                                  valueListenable: pixelAdventure
+                                      .levelWorld
+                                      .player
+                                      .playerAbilitiesHandler
+                                      .abilitiesCooldownMap[ability]!
+                                      .remainingCooldown,
+                                  builder: (context, remainingCooldown, child) {
+                                    if (remainingCooldown > 0) {
+                                      return CircleAvatar(
+                                        backgroundColor:
+                                            Colors.black.withOpacity(0.8),
+                                        child: Center(
+                                          child: FittedBox(
+                                            child: Text(
+                                              remainingCooldown
+                                                  .ceil()
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return const SizedBox.shrink();
+                                    }
+                                  },
                                 ),
-                              )
+                              if (pixelAdventure
+                                      .levelWorld
+                                      .player
+                                      .playerAbilitiesHandler
+                                      .abilitiesCooldownMap[ability] !=
+                                  null)
+                                ValueListenableBuilder(
+                                  valueListenable: pixelAdventure
+                                      .levelWorld
+                                      .player
+                                      .playerAbilitiesHandler
+                                      .abilitiesCooldownMap[ability]!
+                                      .remainingCooldown,
+                                  builder: (context, remainingCooldown, child) {
+                                    return CircularProgressIndicator(
+                                      color: Colors.yellow,
+                                      value: remainingCooldown /
+                                          pixelAdventure
+                                              .levelWorld
+                                              .player
+                                              .playerAbilitiesHandler
+                                              .abilitiesCooldownMap[ability]!
+                                              .cooldownInSecond,
+                                    );
+                                  },
+                                ),
                             ],
                           ),
                         ),
-                      ),
-                      const Text("J")
-                    ],
-                  ),
-                );
-              },
-            ),
-            ValueListenableBuilder(
-              valueListenable:
-                  abilityHandler.lightOrbAbilityCooldown.remainingCooldown,
-              builder: (context, remainingCooldown, child) {
-                return GestureDetector(
-                  onTap: () {
-                    abilityHandler.emitVLightOrb(xUp: true);
-                  },
-                  child: Column(
-                    children: [
-                      Card(
-                        shape: const CircleBorder(),
-                        child: SizedBox(
-                          width: dataController.deviceSize.x * 0.075,
-                          height: dataController.deviceSize.x * 0.075,
-                          child: Stack(
-                            children: [
-                              const Center(child: Icon(Icons.abc_outlined)),
-                              if (remainingCooldown > 0)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(1000),
-                                  child: SizedBox.expand(
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.8),
-                                      ),
-                                    ),
+                        SizedBox(
+                          width: minSide * 0.0125,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: FittedBox(
+                                child: Text(
+                                  ability.name,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.yellow,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              Center(
-                                child: CircularProgressIndicator(
-                                  value: remainingCooldown /
-                                      abilityHandler.lightOrbAbilityCooldown
-                                          .cooldownInSecond,
-                                  color: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Text("K")
-                    ],
-                  ),
-                );
-              },
-            ),
-            ValueListenableBuilder(
-              valueListenable:
-                  abilityHandler.lightOrbAbilityCooldown.remainingCooldown,
-              builder: (context, remainingCooldown, child) {
-                return GestureDetector(
-                  onTap: () {
-                    abilityHandler.emitVLightOrb(xUp: false);
-                  },
-                  child: Column(
-                    children: [
-                      Card(
-                        shape: const CircleBorder(),
-                        child: SizedBox(
-                          width: dataController.deviceSize.x * 0.075,
-                          height: dataController.deviceSize.x * 0.075,
-                          child: Stack(
-                            children: [
-                              const Center(child: Icon(Icons.abc_outlined)),
-                              if (remainingCooldown > 0)
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(1000),
-                                  child: SizedBox.expand(
-                                    child: DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black.withOpacity(0.8),
-                                      ),
-                                    ),
+                              ),
+                            ),
+                            Expanded(
+                              child: FittedBox(
+                                child: Text(
+                                  ability.desc,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
                                   ),
                                 ),
-                              Center(
-                                child: CircularProgressIndicator(
-                                  value: remainingCooldown /
-                                      abilityHandler.lightOrbAbilityCooldown
-                                          .cooldownInSecond,
-                                  color: Colors.yellow,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const Text("L")
-                    ],
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
-            ),
+            )
           ],
         ),
-      ],
-    );
-  }
-
-  Widget _pinkManAbilities() {
-    final abilityHandler =
-        pixelAdventure.levelWorld.player.playerAbilitiesHandler;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text("Pink Man, the Saver"),
-        const Text(
-          "+ can double jump",
-          style: TextStyle(
-            fontSize: 10,
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        ValueListenableBuilder(
-          valueListenable:
-              abilityHandler.checkPointAbilityCooldown.remainingCooldown,
-          builder: (context, remainingCooldown, child) {
-            return GestureDetector(
-              onTap: () {
-                abilityHandler.setCheckPoint();
-              },
-              child: Column(
-                children: [
-                  Card(
-                    shape: const CircleBorder(),
-                    child: SizedBox(
-                      width: dataController.deviceSize.x * 0.075,
-                      height: dataController.deviceSize.x * 0.075,
-                      child: Stack(
-                        children: [
-                          const Center(child: Icon(Icons.abc_outlined)),
-                          if (remainingCooldown > 0)
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(1000),
-                              child: SizedBox.expand(
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(0.8)),
-                                ),
-                              ),
-                            ),
-                          Center(
-                            child: CircularProgressIndicator(
-                              value: remainingCooldown /
-                                  abilityHandler.checkPointAbilityCooldown
-                                      .cooldownInSecond,
-                              color: Colors.yellow,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Text("J")
-                ],
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _virtualGuyAbilities() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const Text("Virtual Guy, the Light Master"),
-        const Text(
-          """
-+ 3x light area
-""",
-          style: TextStyle(
-            fontSize: 10,
-          ),
-        ),
-        ElevatedButton(onPressed: () {}, child: const Text("J - Blink"))
-      ],
+      ),
     );
   }
 }
