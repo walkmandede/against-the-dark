@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/src/components/others/light_orb.dart';
@@ -207,13 +208,13 @@ class PlayerAbilitiesHandler extends Component {
   }
 
   void _clearLightOrb() {
-    final player = game.levelWorld.player;
-
     if (hLightOrb != null) {
       hLightOrb!.finishAbitily(lightOrbInstance: hLightOrb);
+      hLightOrb = null;
     }
     if (vLightOrb != null) {
       vLightOrb!.finishAbitily(lightOrbInstance: vLightOrb);
+      vLightOrb = null;
     }
   }
 
@@ -224,6 +225,9 @@ class PlayerAbilitiesHandler extends Component {
 
     hLightOrb!.position += hLightOrb!.velocity * dt;
     final world = game.levelWorld;
+    world.darkness.lightAreas.removeWhere((e) {
+      return e.id == "LightOrb";
+    });
     world.darkness.lightAreas.add(
       LightArea(
         "LightOrb",
@@ -241,6 +245,9 @@ class PlayerAbilitiesHandler extends Component {
 
     vLightOrb!.position += vLightOrb!.velocity * dt;
     final world = game.levelWorld;
+    world.darkness.lightAreas.removeWhere((e) {
+      return e.id == "LightOrb";
+    });
     world.darkness.lightAreas.add(
       LightArea(
         "LightOrb",

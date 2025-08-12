@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flame/components.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
 import 'package:pixel_adventure/utils/config.dart';
+import 'package:pixel_adventure/utils/logger.dart';
 
 class LightOrb extends SpriteAnimationComponent
     with HasGameRef<PixelAdventure> {
@@ -52,6 +53,8 @@ class LightOrb extends SpriteAnimationComponent
     );
     game.levelWorld.darkness.lightAreas.removeWhere(
       (element) {
+        superPrint(
+            game.levelWorld.darkness.lightAreas.map((e) => e.id).toList());
         return element.id == "LightOrb";
       },
     );
