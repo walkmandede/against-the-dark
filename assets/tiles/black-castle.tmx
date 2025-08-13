@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="84">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="184">
  <tileset firstgid="1" source="my_terrain.tsx"/>
  <layer id="1" name="Background" width="100" height="50">
   <data encoding="csv">
@@ -96,7 +96,7 @@
   <object id="2" name="Wall" type="Wall" x="0" y="784" width="1584" height="16"/>
   <object id="3" name="Wall" type="Wall" x="16" y="0" width="1584" height="16"/>
   <object id="4" name="WallLeft" type="Wall" x="0" y="16" width="16" height="768"/>
-  <object id="5" name="Wall" type="Platform" x="1584" y="16" width="16" height="768"/>
+  <object id="5" name="Wall" type="Wall" x="1584" y="16" width="16" height="768"/>
   <object id="8" name="Wall" type="Wall" x="480" y="16" width="32" height="720"/>
   <object id="10" name="Wall" type="Wall" x="224" y="64" width="32" height="720"/>
   <object id="11" name="Platform" type="Platform" x="96" y="736" width="128" height="16"/>
@@ -205,6 +205,234 @@
   <object id="81" name="Player" type="Player" x="32" y="752" width="32" height="32"/>
   <object id="82" name="Torch" type="Torch" x="192" y="704" width="32" height="32"/>
   <object id="83" name="Torch" type="Torch" x="448" y="192" width="32" height="32"/>
+  <object id="84" name="Platform" type="Platform" x="512" y="720" width="128" height="16"/>
+  <object id="88" name="Platform" type="Platform" x="640" y="720" width="160" height="16"/>
+  <object id="89" name="Platform" type="Platform" x="800" y="720" width="160" height="16"/>
+  <object id="90" name="Platform" type="Platform" x="1120" y="720" width="160" height="16"/>
+  <object id="91" name="Platform" type="Platform" x="1280" y="720" width="160" height="16"/>
+  <object id="92" name="Platform" type="Platform" x="960" y="720" width="160" height="16"/>
+  <object id="98" name="Platform" type="Platform" x="656" y="624" width="128" height="16"/>
+  <object id="99" name="Platform" type="Platform" x="784" y="624" width="160" height="16"/>
+  <object id="100" name="Platform" type="Platform" x="944" y="624" width="160" height="16"/>
+  <object id="101" name="Platform" type="Platform" x="1264" y="624" width="160" height="16"/>
+  <object id="102" name="Platform" type="Platform" x="1424" y="624" width="160" height="16"/>
+  <object id="103" name="Platform" type="Platform" x="1104" y="624" width="160" height="16"/>
+  <object id="116" name="Platform" type="Platform" x="512" y="528" width="128" height="16"/>
+  <object id="117" name="Platform" type="Platform" x="640" y="528" width="160" height="16"/>
+  <object id="118" name="Platform" type="Platform" x="800" y="528" width="160" height="16"/>
+  <object id="119" name="Platform" type="Platform" x="1120" y="528" width="160" height="16"/>
+  <object id="120" name="Platform" type="Platform" x="1280" y="528" width="160" height="16"/>
+  <object id="121" name="Platform" type="Platform" x="960" y="528" width="160" height="16"/>
+  <object id="122" name="Platform" type="Platform" x="656" y="432" width="128" height="16"/>
+  <object id="123" name="Platform" type="Platform" x="784" y="432" width="160" height="16"/>
+  <object id="124" name="Platform" type="Platform" x="944" y="432" width="160" height="16"/>
+  <object id="125" name="Platform" type="Platform" x="1264" y="432" width="160" height="16"/>
+  <object id="126" name="Platform" type="Platform" x="1424" y="432" width="160" height="16"/>
+  <object id="127" name="Platform" type="Platform" x="1104" y="432" width="160" height="16"/>
+  <object id="128" name="Platform" type="Platform" x="512" y="336" width="128" height="16"/>
+  <object id="129" name="Platform" type="Platform" x="640" y="336" width="160" height="16"/>
+  <object id="130" name="Platform" type="Platform" x="800" y="336" width="160" height="16"/>
+  <object id="131" name="Platform" type="Platform" x="1120" y="336" width="160" height="16"/>
+  <object id="132" name="Platform" type="Platform" x="1280" y="336" width="160" height="16"/>
+  <object id="133" name="Platform" type="Platform" x="960" y="336" width="160" height="16"/>
+  <object id="134" name="Block" type="Block" x="1408" y="80" width="32" height="256"/>
+  <object id="136" name="Platform" type="Platform" x="608" y="80" width="160" height="16"/>
+  <object id="137" name="Platform" type="Platform" x="768" y="80" width="160" height="16"/>
+  <object id="138" name="Platform" type="Platform" x="1088" y="80" width="160" height="16"/>
+  <object id="139" name="Platform" type="Platform" x="1248" y="80" width="160" height="16"/>
+  <object id="140" name="Platform" type="Platform" x="928" y="80" width="160" height="16"/>
+  <object id="141" name="Platform" type="Platform" x="512" y="208" width="160" height="16"/>
+  <object id="142" name="Platform" type="Platform" x="672" y="208" width="160" height="16"/>
+  <object id="143" name="Platform" type="Platform" x="992" y="208" width="160" height="16"/>
+  <object id="144" name="Platform" type="Platform" x="1152" y="208" width="160" height="16"/>
+  <object id="145" name="Platform" type="Platform" x="832" y="208" width="160" height="16"/>
+  <object id="146" name="MovingPlatform" type="MovingPlatform" x="1536" y="144" width="48" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="5"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="147" name="MovingPlatform" type="MovingPlatform" x="1440" y="272" width="48" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="5"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="148" name="SpinningBlade" type="SpinningBlade" x="560" y="608" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="149" name="SpinningBlade" type="SpinningBlade" x="1488" y="512" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="150" name="SpinningBlade" type="SpinningBlade" x="560" y="416" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="151" name="SpinningBlade" type="SpinningBlade" x="1344" y="192" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="152" name="SpinningBlade" type="SpinningBlade" x="544" y="96" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="153" name="Goal" type="Goal" x="512" y="304" width="32" height="32"/>
+  <object id="154" name="SpinningBlade" type="SpinningBlade" x="768" y="704" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="155" name="SpinningBlade" type="SpinningBlade" x="944" y="704" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="156" name="SpinningBlade" type="SpinningBlade" x="1120" y="704" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="157" name="SpinningBlade" type="SpinningBlade" x="1296" y="704" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="158" name="SpinningBlade" type="SpinningBlade" x="768" y="608" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="4"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="159" name="SpinningBlade" type="SpinningBlade" x="928" y="608" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="4"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="160" name="SpinningBlade" type="SpinningBlade" x="1104" y="608" width="16" height="16">
+   <properties>
+    <property name="axisAmount" type="float" value="4"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="161" name="SpinningBlade" type="SpinningBlade" x="1264" y="592" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="162" name="SpinningBlade" type="SpinningBlade" x="1424" y="592" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="164" name="SpinningBlade" type="SpinningBlade" x="1088" y="496" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="166" name="SpinningBlade" type="SpinningBlade" x="752" y="496" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="167" name="SpinningBlade" type="SpinningBlade" x="768" y="400" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="171" name="SpinningBlade" type="SpinningBlade" x="1120" y="400" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="172" name="SpinningBlade" type="SpinningBlade" x="1264" y="352" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="173" name="SpinningBlade" type="SpinningBlade" x="1408" y="400" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="174" name="SpinningBlade" type="SpinningBlade" x="928" y="352" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="175" name="SpinningBlade" type="SpinningBlade" x="928" y="448" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="176" name="SpinningBlade" type="SpinningBlade" x="1280" y="448" width="32" height="32">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="177" name="SpinningBlade" type="SpinningBlade" x="704" y="160" width="48" height="48">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="178" name="SpinningBlade" type="SpinningBlade" x="976" y="160" width="48" height="48">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="179" name="SpinningBlade" type="SpinningBlade" x="1168" y="160" width="48" height="48">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="180" name="SpinningBlade" type="SpinningBlade" x="1200" y="288" width="48" height="48">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="181" name="SpinningBlade" type="SpinningBlade" x="928" y="288" width="48" height="48">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
+  <object id="183" name="SpinningBlade" type="SpinningBlade" x="752" y="288" width="48" height="48">
+   <properties>
+    <property name="axisAmount" type="float" value="3"/>
+    <property name="hAxis" type="bool" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="Spawnpoints" visible="0"/>
 </map>

@@ -16,6 +16,7 @@ import 'package:pixel_adventure/src/game/my_game.dart';
 import 'package:pixel_adventure/utils/app_enums.dart';
 import 'package:pixel_adventure/utils/collision_helper.dart';
 import 'package:pixel_adventure/utils/config.dart';
+import 'package:pixel_adventure/utils/logger.dart';
 
 class PlayerHitBox {
   final Vector2 position;
@@ -116,6 +117,7 @@ class Player extends SpriteAnimationGroupComponent
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    superPrint(keysPressed);
     PlayerUserInputHandler.onKeyEvent(event, keysPressed, this);
     return super.onKeyEvent(event, keysPressed);
   }

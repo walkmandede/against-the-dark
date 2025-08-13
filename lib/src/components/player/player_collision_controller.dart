@@ -100,8 +100,7 @@ class PlayerCollisionController {
         if (player.velocity.x > 0) {
           player.position.x = other.position.x -
               (player.playerHitBox.position.x + player.playerHitBox.size.x) +
-              player.size.x /
-                  2.001; // 2.0 is actual size , 2.001 for edge cases
+              player.size.x / 2.05; // 2.0 is actual size , 2.001 for edge cases
           player.velocity.x = 0;
         }
         break;
@@ -109,7 +108,8 @@ class PlayerCollisionController {
         if (player.velocity.x < 0) {
           player.position.x = other.position.x +
               other.size.x -
-              (hitBoxHalfWidth - spriteHalfWidth);
+              (hitBoxHalfWidth - spriteHalfWidth) +
+              player.size.x / 2.05;
 
           player.velocity.x = 0;
         }

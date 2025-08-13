@@ -15,6 +15,7 @@ import 'package:pixel_adventure/src/game/darkness.dart';
 import 'package:pixel_adventure/src/game/level_world.dart';
 import 'package:pixel_adventure/utils/app_enums.dart';
 import 'package:pixel_adventure/utils/config.dart';
+import 'package:pixel_adventure/utils/logger.dart';
 
 class PixelAdventure extends FlameGame
     with
@@ -26,7 +27,6 @@ class PixelAdventure extends FlameGame
   late LevelWorld levelWorld;
   late CameraComponent cam;
   late JoystickComponent joystick;
-  bool xShouldShowJoystick = false;
 
   final String levelName;
   final Function() onQuitGame;
@@ -92,19 +92,20 @@ class PixelAdventure extends FlameGame
       cam,
       levelWorld,
     ]);
-    addJoyStick();
+    // addJoyStick();
     return super.onLoad();
   }
 
   @override
   void update(double dt) {
-    handleJoystick();
+    // handleJoystick();
 
     super.update(dt);
   }
 
   handleJoystick() {
-    if (!xShouldShowJoystick) {
+    superPrint(joystick.direction);
+    if (dataController.enumControllerMode.value != EnumControllerMode.touch) {
       return;
     }
     final player = levelWorld.player;
@@ -134,32 +135,26 @@ class PixelAdventure extends FlameGame
   void addJoyStick() {
     joystick = JoystickComponent(
       background: CircleComponent(
-        radius: dataController.deviceSize.y * 0.1,
-        paint: Paint()..color = Colors.black.withOpacity(0.4),
+        radius: dataController.deviceSize.y * 0.15,
+        paint: Paint()..color = Colors.yellow.withOpacity(0.4),
       ),
       knob: CircleComponent(
-        radius: dataController.deviceSize.y * 0.06,
+        radius: dataController.deviceSize.y * 0.1,
         paint: Paint()..color = Colors.white.withOpacity(0.5),
       ),
-      // position: Vector2(dataController.deviceSize.x * 0.1, dataController.deviceSize.x * 0.1),
+      position: Vector2(
+          dataController.deviceSize.x * 0.1, dataController.deviceSize.x * 0.1),
       margin: EdgeInsets.only(
         bottom: dataController.deviceSize.y * 0.05,
         left: dataController.deviceSize.x * 0.025,
       ),
+      priority: 2,
     );
-    if (kIsWeb) {
-      if (!kDebugMode) {
-        xShouldShowJoystick = true;
-        cam.viewport.add(joystick);
-      } else {
-        xShouldShowJoystick = false;
-      }
-      return;
-    } else {
-      if (Platform.isAndroid || Platform.isIOS) {
-        cam.viewport.add(joystick);
-        xShouldShowJoystick = true;
-      }
-    }
+
+    // if (dataController.enumControllerMode.value == EnumControllerMode.touch) {
+    //   Future.delayed(const Duration(milliseconds: 300)).then((_) {
+    //     cam.viewport.add(joystick);
+    //   });
+    // }
   }
 }

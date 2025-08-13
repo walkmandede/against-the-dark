@@ -23,13 +23,14 @@
         "black-castle.tmx": {
             "expandedObjectLayers": [
                 2,
+                4,
                 3
             ],
-            "scale": 1.4896,
+            "scale": 0.6355,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": -0.6713211600429645,
-                "y": 632.720193340494
+                "x": 911.093627065303,
+                "y": 597.1675845790716
             }
         },
         "cursed_jungle.tmx": {
@@ -39,8 +40,8 @@
             "scale": 1.5001,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 163.322445170322,
-                "y": 39.6640223985068
+                "x": 4120.391973868409,
+                "y": 279.64802346510237
             }
         },
         "level-1.tmx": {

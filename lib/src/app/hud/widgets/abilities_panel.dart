@@ -14,30 +14,29 @@ class AbilitiesPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
-      child: LayoutBuilder(builder: (a1, c1) {
-        final maxSide = max(c1.maxWidth, c1.maxHeight);
-        final minSide = min(c1.maxWidth, c1.maxHeight);
-        return Padding(
-          padding: EdgeInsets.all(minSide * 0.025),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ValueListenableBuilder(
-                valueListenable:
-                    pixelAdventure.levelWorld.player.currentCharacter,
-                builder: (context, currentCharacter, child) {
-                  return _eachPlayerAbilityWidget(
-                      currentCharacter: currentCharacter, minSide: minSide);
-                },
-              ),
-            ],
-          ),
-        );
-      }),
-    );
+    return LayoutBuilder(builder: (a1, c1) {
+      final minSide = min(c1.maxWidth, c1.maxHeight);
+      return Padding(
+        padding: EdgeInsets.all(minSide * 0.025),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ValueListenableBuilder(
+              valueListenable:
+                  pixelAdventure.levelWorld.player.currentCharacter,
+              builder: (context, currentCharacter, child) {
+                return _eachPlayerAbilityWidget(
+                  currentCharacter: currentCharacter,
+                  minSide: minSide,
+                );
+              },
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   Widget _eachPlayerAbilityWidget(
@@ -49,7 +48,7 @@ class AbilitiesPanel extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: Colors.white)),
       child: Padding(
-        padding: EdgeInsets.all(minSide * 0.01),
+        padding: EdgeInsets.all(minSide * 0.025),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

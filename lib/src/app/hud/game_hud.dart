@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/abilities_panel.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/action_panel.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/characters_panel.dart';
+import 'package:pixel_adventure/src/app/hud/widgets/controller_panel.dart';
 import 'package:pixel_adventure/src/app/hud/widgets/game_stats_panel.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
@@ -24,7 +25,7 @@ class GameHud extends StatelessWidget {
                 child: CharactersPanel(pixelAdventure: pixelAdventure),
               ),
               Align(
-                alignment: Alignment.bottomLeft,
+                alignment: Alignment.bottomCenter,
                 child: AbilitiesPanel(
                   pixelAdventure: pixelAdventure,
                 ),
@@ -37,7 +38,15 @@ class GameHud extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomRight,
-                child: GameStatsPanel(
+                child: IgnorePointer(
+                  child: GameStatsPanel(
+                    pixelAdventure: pixelAdventure,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: ControllerPanel(
                   pixelAdventure: pixelAdventure,
                 ),
               ),

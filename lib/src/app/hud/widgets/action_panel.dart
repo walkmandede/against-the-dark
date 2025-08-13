@@ -13,37 +13,34 @@ class ActionPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: dataController.deviceSize.x * 0.1,
-      child: LayoutBuilder(
-        builder: (a1, c1) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: EdgeInsets.all(min(c1.maxWidth, c1.maxHeight) * 0.05),
-                child: GestureDetector(
-                  onTap: () {
-                    pixelAdventure.pauseGame();
-                  },
-                  child: Card(
-                    color: Colors.white,
-                    shape: const CircleBorder(),
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(
-                            min(c1.maxWidth, c1.maxHeight) * 0.05),
-                        child: const Icon(Icons.pause),
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          );
-        },
-      ),
+    return LayoutBuilder(
+      builder: (a1, c1) {
+        return Padding(
+          padding: EdgeInsets.all(min(c1.maxWidth, c1.maxHeight) * 0.05),
+          child: IconButton(
+            icon: Icon(Icons.pause),
+            onPressed: () {
+              pixelAdventure.pauseGame();
+            },
+          ),
+          // child: GestureDetector(
+          //   onTap: () {
+          //     pixelAdventure.pauseGame();
+          //   },
+          //   child: Card(
+          //     color: Colors.white,
+          //     shape: const CircleBorder(),
+          //     child: Center(
+          //       child: Padding(
+          //         padding:
+          //             EdgeInsets.all(min(c1.maxWidth, c1.maxHeight) * 0.05),
+          //         child: const Icon(Icons.pause),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        );
+      },
     );
   }
 }

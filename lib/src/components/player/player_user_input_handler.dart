@@ -1,11 +1,12 @@
 import 'package:flutter/services.dart';
 import 'package:pixel_adventure/src/components/player/player.dart';
+import 'package:pixel_adventure/utils/logger.dart';
 
 import 'enum_players.dart';
 
 class PlayerUserInputHandler {
   static onKeyEvent(
-      KeyEvent event, Set<LogicalKeyboardKey> keysPressed, Player player) {
+      KeyEvent? event, Set<LogicalKeyboardKey> keysPressed, Player player) {
     player.movementX = 0;
 
     final moveLeft = keysPressed.contains(LogicalKeyboardKey.keyA) ||

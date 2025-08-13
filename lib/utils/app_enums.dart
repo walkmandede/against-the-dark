@@ -1,3 +1,5 @@
+enum EnumControllerMode { touch, keyboard }
+
 enum EnumPlayerState {
   idle(path: "Idle (32x32).png"),
   run(path: "Run (32x32).png");

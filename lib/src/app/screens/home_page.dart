@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:pixel_adventure/src/app/hud/game_hud.dart';
 import 'package:pixel_adventure/src/app/hud/pause_menu.dart';
 import 'package:pixel_adventure/src/app/hud/victory_dialog.dart';
+import 'package:pixel_adventure/src/controllers/data_controller.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
 import 'package:pixel_adventure/utils/app_enums.dart';
 
@@ -146,8 +147,32 @@ class _HomePageState extends State<HomePage> {
                   height: c1.smallest.shortestSide * 0.05,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    ValueListenableBuilder(
+                      valueListenable: dataController.enumControllerMode,
+                      builder: (context, enumControllerMode, child) {
+                        return TextButton.icon(
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.yellow,
+                          ),
+                          label: Text(
+                              "Change Control Mode : ${enumControllerMode.name.toUpperCase()}"),
+                          icon: const Icon(Icons.keyboard),
+                          onPressed: () {
+                            if (enumControllerMode ==
+                                EnumControllerMode.keyboard) {
+                              dataController.enumControllerMode.value =
+                                  EnumControllerMode.touch;
+                            } else if (enumControllerMode ==
+                                EnumControllerMode.touch) {
+                              dataController.enumControllerMode.value =
+                                  EnumControllerMode.keyboard;
+                            }
+                          },
+                        );
+                      },
+                    ),
                     TextButton.icon(
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.yellow,
@@ -155,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                       label: const Text("How to play"),
                       icon: const Icon(Icons.help_rounded),
                       onPressed: () {},
-                    )
+                    ),
                   ],
                 ),
               ],
