@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="184">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="189">
  <tileset firstgid="1" source="my_terrain.tsx"/>
  <layer id="1" name="Background" width="100" height="50">
   <data encoding="csv">
@@ -99,9 +99,8 @@
   <object id="5" name="Wall" type="Wall" x="1584" y="16" width="16" height="768"/>
   <object id="8" name="Wall" type="Wall" x="480" y="16" width="32" height="720"/>
   <object id="10" name="Wall" type="Wall" x="224" y="64" width="32" height="720"/>
-  <object id="11" name="Platform" type="Platform" x="96" y="736" width="128" height="16"/>
-  <object id="12" name="Platform" type="Platform" x="16" y="688" width="128" height="16"/>
-  <object id="16" name="Step" type="Step" x="16" y="640" width="48" height="16"/>
+  <object id="12" name="Platform" type="Platform" x="16" y="672" width="128" height="16"/>
+  <object id="16" name="Step" type="Step" x="176" y="688" width="48" height="16"/>
   <object id="18" name="Platform" type="Platform" x="128" y="560" width="96" height="16"/>
   <object id="19" name="Step" type="Step" x="16" y="592" width="48" height="16"/>
   <object id="21" name="Step" type="Step" x="176" y="464" width="48" height="16"/>
@@ -202,8 +201,8 @@
     <property name="hAxis" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="81" name="Player" type="Player" x="32" y="752" width="32" height="32"/>
-  <object id="82" name="Torch" type="Torch" x="192" y="704" width="32" height="32"/>
+  <object id="81" name="Player" type="Player" x="48" y="720" width="16" height="16"/>
+  <object id="82" name="Torch" type="Torch" x="112" y="640" width="32" height="32"/>
   <object id="83" name="Torch" type="Torch" x="448" y="192" width="32" height="32"/>
   <object id="84" name="Platform" type="Platform" x="512" y="720" width="128" height="16"/>
   <object id="88" name="Platform" type="Platform" x="640" y="720" width="160" height="16"/>
@@ -433,6 +432,10 @@
     <property name="hAxis" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="184" name="Ground" type="Ground" x="16" y="736" width="48" height="48"/>
+  <object id="186" name="Ground" type="Ground" x="64" y="736" width="48" height="48"/>
+  <object id="187" name="Ground" type="Ground" x="112" y="736" width="48" height="48"/>
+  <object id="188" name="Ground" type="Ground" x="160" y="736" width="64" height="48"/>
  </objectgroup>
  <objectgroup id="3" name="Spawnpoints" visible="0"/>
 </map>

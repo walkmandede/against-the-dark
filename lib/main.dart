@@ -2,6 +2,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pixel_adventure/src/app/hud/game_hud.dart';
 import 'package:pixel_adventure/src/app/screens/home_page.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
@@ -35,7 +36,10 @@ class _MainAppState extends State<MainApp> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       dataController.deviceSize =
           Vector2(context.size?.width ?? 300, context.size?.height ?? 300);
-      await Future.delayed(const Duration(milliseconds: 1000));
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+      ]);
+      await Future.delayed(const Duration(milliseconds: 100));
       xLoading.value = false;
     });
   }

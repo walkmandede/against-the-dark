@@ -7,6 +7,7 @@ import 'package:pixel_adventure/src/app/hud/widgets/characters_panel.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
+import 'package:pixel_adventure/utils/app_enums.dart';
 
 class PauseMenu extends StatelessWidget {
   final PixelAdventure pixelAdventure;
@@ -29,6 +30,29 @@ class PauseMenu extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const Text("The game is paused"),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        ValueListenableBuilder(
+                          valueListenable: dataController.enumControllerMode,
+                          builder: (context, enumControllerMode, child) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                if (enumControllerMode ==
+                                    EnumControllerMode.keyboard) {
+                                  dataController.enumControllerMode.value =
+                                      EnumControllerMode.touch;
+                                } else if (enumControllerMode ==
+                                    EnumControllerMode.touch) {
+                                  dataController.enumControllerMode.value =
+                                      EnumControllerMode.keyboard;
+                                }
+                              },
+                              child: Text(
+                                  "Controller: ${enumControllerMode.name.toUpperCase()}"),
+                            );
+                          },
+                        ),
                         const SizedBox(
                           height: 10,
                         ),

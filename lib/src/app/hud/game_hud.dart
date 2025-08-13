@@ -7,6 +7,7 @@ import 'package:pixel_adventure/src/app/hud/widgets/game_stats_panel.dart';
 import 'package:pixel_adventure/src/components/player/enum_players.dart';
 import 'package:pixel_adventure/src/controllers/data_controller.dart';
 import 'package:pixel_adventure/src/game/my_game.dart';
+import 'package:pixel_adventure/utils/app_enums.dart';
 
 class GameHud extends StatelessWidget {
   final PixelAdventure pixelAdventure;
@@ -37,7 +38,7 @@ class GameHud extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.topCenter,
                 child: IgnorePointer(
                   child: GameStatsPanel(
                     pixelAdventure: pixelAdventure,
@@ -45,11 +46,18 @@ class GameHud extends StatelessWidget {
                 ),
               ),
               Align(
-                alignment: Alignment.bottomLeft,
-                child: ControllerPanel(
-                  pixelAdventure: pixelAdventure,
-                ),
-              ),
+                  alignment: Alignment.bottomLeft,
+                  child: ValueListenableBuilder(
+                    valueListenable: dataController.enumControllerMode,
+                    builder: (context, enumControllerMode, child) {
+                      if (enumControllerMode == EnumControllerMode.keyboard) {
+                        return const SizedBox.shrink();
+                      }
+                      return ControllerPanel(
+                        pixelAdventure: pixelAdventure,
+                      );
+                    },
+                  )),
             ],
           ),
         ));

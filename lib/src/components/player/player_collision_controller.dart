@@ -108,8 +108,7 @@ class PlayerCollisionController {
         if (player.velocity.x < 0) {
           player.position.x = other.position.x +
               other.size.x -
-              (hitBoxHalfWidth - spriteHalfWidth) +
-              player.size.x / 2.05;
+              (hitBoxHalfWidth - spriteHalfWidth);
 
           player.velocity.x = 0;
         }

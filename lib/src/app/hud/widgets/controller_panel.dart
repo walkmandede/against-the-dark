@@ -93,6 +93,71 @@ class ControllerPanel extends StatelessWidget {
                 ),
               ),
               const Spacer(),
+
+              GestureDetector(
+                onTap: () {
+                  PlayerUserInputHandler.onKeyEvent(
+                    null,
+                    {LogicalKeyboardKey.keyJ},
+                    pixelAdventure.levelWorld.player,
+                  );
+                },
+                child: Card(
+                  shape: const CircleBorder(),
+                  color: Colors.white.withOpacity(0.5),
+                  child: Padding(
+                      padding: EdgeInsets.all(minSide * 0.05),
+                      child: const FittedBox(
+                        child: Text(
+                          "J",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  PlayerUserInputHandler.onKeyEvent(
+                    null,
+                    {LogicalKeyboardKey.keyK},
+                    pixelAdventure.levelWorld.player,
+                  );
+                },
+                child: Card(
+                  shape: const CircleBorder(),
+                  color: Colors.white.withOpacity(0.5),
+                  child: Padding(
+                      padding: EdgeInsets.all(minSide * 0.05),
+                      child: const FittedBox(
+                        child: Text(
+                          "K",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  PlayerUserInputHandler.onKeyEvent(
+                    null,
+                    {LogicalKeyboardKey.keyL},
+                    pixelAdventure.levelWorld.player,
+                  );
+                },
+                child: Card(
+                  shape: const CircleBorder(),
+                  color: Colors.white.withOpacity(0.5),
+                  child: Padding(
+                      padding: EdgeInsets.all(minSide * 0.05),
+                      child: const FittedBox(
+                        child: Text(
+                          "L",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )),
+                ),
+              ),
+
               GestureDetector(
                 onTap: () {
                   pixelAdventure.levelWorld.player.playerAbilitiesHandler

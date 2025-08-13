@@ -36,7 +36,7 @@ class GameStatsPanel extends StatelessWidget {
                             borderRadius: BorderRadius.circular(16),
                             side: const BorderSide(color: Colors.white)),
                         child: Padding(
-                          padding: EdgeInsets.all(minSide * 0.01),
+                          padding: EdgeInsets.all(minSide * 0.025),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
